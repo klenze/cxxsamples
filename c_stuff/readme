@@ -1,0 +1,35 @@
+c_stuff.C is a ROOT macro which tries to be terrible in a variety of ways.
+
+Your tasks:
+0. Run the macro with root -l -q -x test.C
+1. Compile the macro using g++ (or clang++ for OS X)
+1.1 How exactly you call the compiler is up to you. You can use the rootcompile
+    alias from ../aliases.sh, write your own Makefile, bash script, CMake file,
+    or create a Visual Studio project for all I care :-)
+1.2 Note that successful compilation will likely require you to include ROOT
+    headers for stuff like TFile.
+1.3 Also note that the main function in C/C++ is called int main(), not c_stuff.
+2. Now fix the macro.
+2.1 Replace one dimensional arrays with std::vector or std::array
+2.2 Replace multidimensional arrays with boost::multi_array
+2.3 Replace character strings with std::string
+2.4 Replace sprintf with boost::format or ostringstream.
+    (Use ROOT's Form() if you can't get either to work)
+2.5 Replace C-style casts with dynamic_cast.
+3. Compile & run again. Fix any bugs.
+
+Optional bonus tasks (pick any you like)
+4. Optimize c_stuff. 
+4.1 What could be used instead of an rectangular array in binomials()?
+4.2 How can you get around spelling out dynamic_cast in this case?
+
+5. Pick a class from R3BRoot and apply what you have learned.
+5.1 There are enough classes for everyone. Coordinate what you want to fix at
+    https://yopad.eu/p/improving_r3broot
+5.2 Note that string processing commits are particularly valuable as we have no
+    way to automatically fix string processing in a reliable way. If you pick
+    this, make sure that the strings are actually unchanged!
+5.3 When done, test it and make a PR at github.com
+
+6. Pick a macro from R3BRoot and turn it into a cmake compiled executable.
+   Again, coordinate via the link from 5.1

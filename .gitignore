@@ -1,4 +1,5 @@
 *~
 *.o
-mytest
+memleak/memleak
 hist.root
+a.out
