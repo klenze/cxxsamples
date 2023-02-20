@@ -1,7 +1,7 @@
 
 CXX=$(shell root-config --cxx)
-CXXFLAGS=$(shell root-config --cflags) -D_GLIBCXX_ASSERTIONS=1
-LDFLAGS=$(shell root-config  --ldflags --libs --glibs)
+CXXFLAGS=$(shell root-config --cflags) -D_GLIBCXX_ASSERTIONS=1 -g
+LDFLAGS=$(shell root-config  --ldflags --libs --glibs) -g
 TARGET=memleak
 $(TARGET): $(TARGET).o
 	$(CXX) $<  $(LDFLAGS)  -o $@
