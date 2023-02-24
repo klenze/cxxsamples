@@ -18,5 +18,6 @@ void C(bool crash=1)
 }
 int main()
 {
-  C(0);
+  C(1);
 }
+

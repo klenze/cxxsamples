@@ -1,0 +1,95 @@
+= gdb 101 =
+
+== Post mortem debugging (core files) ==
+
+0. Preparation
+In case of ROOT macros, disable ROOT stacktraces by having
+the line
+  Root.Stacktrace: no
+in your $HOME/.rootrc
+Root stack traces are not core dumps, even if FairRoot mislabels
+them as core.
+
+
+Also, be sure to compile your program with the -g option.
+(otherwise you will only get the disassembly, not C code)
+
+Note that you will not get useful debugging information in interpreted
+ROOT code. If you run macros in root, try to use root.exe as an
+interpreter for running the debugger against. 
+
+
+1. Run ulimit -c unlimited to tell bash to enable core dumps.
+
+2. Run the program which will segfault It will show
+"Segmentation fault (core dumped)"
+
+3. Run ls -t to find the core dump. It will typically be named
+core or core_something.
+
+4. Run gdb path/to/executable core-file
+
+5. Inspecting the stack
+
+In the gdb prompt, you can now run several commands to inspect
+the state of the program when it crashed.
+
+gdb> backtrace # or bt -> shows you the call stack.
+Frame 0 is the innermost frame (the function which crashed)
+Frame 1 is the frame of the function which called the function which
+crashed, and so on.
+The outermost frame is typically the main function.
+
+gdb> frame N # N some integer (short form f N)
+will select the frame N.
+
+There you can run
+gdb> info locals
+to get the value of local variables
+gdb> list
+to get the current code context
+or 
+gdb> print expression
+to calculate some expression (which may involve calls (to non-inlined
+functions) and local variables.
+
+
+== Running the program in the debugger ==
+
+You can also run a program in the debugger by running
+gdb --args progname arg1 arg2 ...
+
+(Again, use root.exe for macros.)
+
+this will give you a gdb prompt.
+
+You can now set breakpoints by running
+gdb> break functionname
+
+Start executing the program using
+gdb> run # or r
+
+When gdb hits a breakpoint (or you press control C) it will stop executing
+the program and give you a prompt.
+You can inspect the stack just as above (see post mortem, point 5).
+
+Also, you can run
+gdb> continue # or c
+to continue program execution (until the next breakpoint)
+
+Or you can execute the program in smaller steps:
+gdb> step # or s -- step 
+gdb> next # or n -- execute to the next line of code (running through function calls)
+gdb> fin # run until your current frame is done
+
+== More information ==
+
+gdb offers many more features. Watchpoints can look when a memory location changes.
+You can break on syscalls. You can connect to a running process and debug it (or
+do clever tricks like redirecting stdout of a running process).
+See https://ftp.gnu.org/old-gnu/Manuals/gdb/html_node/gdb_toc.html
+or use your favorite search engine!
+
+Cheers,
+   Philipp
+   
